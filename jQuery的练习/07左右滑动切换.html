@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07左右滑动切换</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .vspace {
+            height: 10px;
+        }
+
+        .wrapper {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            padding: 10px;
+        }
+
+        .ind01 {
+            width: 900px;
+            height: 100px;
+            background: #ccc;
+            margin: 0 auto;
+            padding: 10px 30px;
+        }
+
+        .ind01 .ind01_lunbo {
+            width: 900px;
+            height: 100px;
+        }
+
+        .ind01 .ind01_lunbo .ind01_left {
+            cursor: pointer;
+            width: 20px;
+            height: 100px;
+            background: #666;
+            float: left;
+            line-height: 100px;
+            text-align: center;
+        }
+
+        .ind01 .ind01_lunbo .ind01_left:hover {
+            color: #fff;
+            background: #333;
+        }
+
+        .ind01 .ind01_lunbo .ind01_right {
+            cursor: pointer;
+            width: 20px;
+            height: 100px;
+            background: #666;
+            float: right;
+            line-height: 100px;
+            text-align: center;
+        }
+
+        .ind01 .ind01_lunbo .ind01_right:hover {
+            color: #fff;
+            background: #333;
+        }
+
+        .ind01 .ind01_lunbo .ind01_center {
+            position: relative;
+            float: left;
+            height: 100px;
+            width: 800px;
+            overflow: hidden;
+            margin-left: 35px;
+        }
+
+        .ind01 .ind01_lunbo ul {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 9999px;
+        }
+
+        .ind01 .ind01_lunbo ul li {
+            list-style: none;
+            margin-right: 10px;
+            float: left;
+            background: #8c0b0b;
+            width: 150px;
+            height: 100px;
+            color: #FFF;
+            text-align: center;
+            line-height: 100px;
+            overflow: hidden;
+        }
+
+        .ind01 .ind01_lunbo ul li img {
+            width: 150px;
+            height: 100px;
+        }
+    </style>
+    <script src="../jquery-1.11.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="ind01">
+        <div class="ind01_lunbo">
+            <div class="ind01_left">&lt;</div>
+            <div class="ind01_center">
+                <ul id="ind01_tp1">
+                    <li><img src="image/pic/pic1.jpg"></li>
+                    <li><img src="image/pic/pic2.jpg"></li>
+                    <li><img src="image/pic/pic3.jpg"></li>
+                    <li><img src="image/pic/pic4.jpg"></li>
+                    <li><img src="image/pic/pic5.jpg"></li>
+                    <li><img src="image/pic/pic6.jpg"></li>
+                    <li><img src="image/pic/pic7.jpg"></li>
+                    <li><img src="image/pic/pic8.jpg"></li>
+                </ul>
+            </div>
+            <div class="ind01_right"> &gt; </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        // var index = 0;
+        // $(".ind01_right").click(function () {
+        //     index++;
+        //     $("#ind01_tp1").animate({"left":-(160*index)+"px"})
+        // })
+
+        $(".ind01_right").click(function () {
+            // 1.点击  整体添加动画  向左移动
+            $("#ind01_tp1").animate({
+                "left": "-160px"
+            }, function () {
+                // 2.将第一个元素  添加到最后面
+                $("#ind01_tp1 li").eq(0).appendTo($("#ind01_tp1"));
+                // 3.将定位重置到  起始位置   left:0
+                $("#ind01_tp1").css({
+                    "left": "0"
+                });
+            })
+        })
+
+        $(".ind01_left").click(function () {
+            // 1.将最后一个元素  添加到最前面
+            $("#ind01_tp1 li").last().prependTo($("#ind01_tp1"));
+            // 2.将定位重置到  起始位置   left:-160px
+            $("#ind01_tp1").css({
+                "left": "-160px"
+            });
+            // 3.点击  整体添加动画  向右移动
+            $("#ind01_tp1").animate({
+                "left": "0"
+            })
+        })
+
+
+
+
+    })
+</script>
+
+</html>

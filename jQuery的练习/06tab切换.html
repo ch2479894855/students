@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06tab切换</title>
+    <script src="https://www.jq22.com/jquery/jquery-3.3.1.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .wrap{
+            width: 400px;
+            height: 500px;
+            background: pink;
+            margin: 100px auto;
+            overflow: hidden;
+        }
+        .pic_list li{
+            width: 398px;
+            height: 398px;
+            border: 1px solid black;
+            display: none;
+        }
+        .pic_list li:nth-of-type(1){
+            background: url("image/pic/pic1.jpg") no-repeat center/100% 100%;
+        }
+        .pic_list li:nth-of-type(2){
+            background: url("image/pic/pic2.jpg") no-repeat center/100% 100%;
+        }
+        .pic_list li:nth-of-type(3){
+            background: url("image/pic/pic3.jpg") no-repeat center/100% 100%;
+        }
+        .pic_list li:nth-of-type(4){
+            background: url("image/pic/pic4.jpg") no-repeat center/100% 100%;
+        }
+        .pic_list li.show{
+            display: block;
+        }
+
+        .min_pic li{
+            width: 78px;
+            height: 78px;
+            float: left;
+            margin: 10px;
+            border: 1px solid black;
+        }
+        .min_pic li:hover{
+            border: 1px solid yellow;
+            /* animation: fangda .5s linear; */
+        }
+        .min_pic li.red{
+            border: 1px solid yellow;
+        }
+        @keyframes fangda {
+            from{
+                transform: scale(1);
+            }
+            50%{
+                transform: scale(1.5);
+            }
+            to{
+                transform: scale(1);
+            }
+        }
+        .min_pic li:nth-of-type(1){
+            background: url("image/pic/pic1.jpg") no-repeat center/100% 100%;
+        }
+        .min_pic li:nth-of-type(2){
+            background: url("image/pic/pic2.jpg") no-repeat center/100% 100%;
+        }
+
+        .min_pic li:nth-of-type(3){
+            background: url("image/pic/pic3.jpg") no-repeat center/100% 100%;
+        }
+        .min_pic li:nth-of-type(4){
+            background: url("image/pic/pic4.jpg") no-repeat center/100% 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- 上边的大图 -->
+        <ul class="pic_list">
+            <li class="show"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <!-- 下边的缩略图 -->
+        <ul class="min_pic">
+            <li class="red"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+</body>
+<script>
+    $(function(){
+        $(".min_pic li").click(function(){
+            $(this).toggleClass("red").siblings().removeClass("red");
+            var index=$(this).index();
+            $(".pic_list li").eq(index).fadeIn().siblings().fadeOut(100);
+        })
+    })
+
+
+
+
+</script>
+
+</html>

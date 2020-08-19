@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17模拟购物车效果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .box {
+            height: 100px;
+            background: yellow;
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+
+        ul {
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            margin-left: 100px;
+            background: pink;
+            border-radius: 3px;
+            border: 1px solid;
+        }
+
+        ul>li {
+            float: left;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        ul>.btn {
+            width: 20px;
+            border: 1px solid #999;
+            cursor: pointer;
+        }
+
+        ul>.btn.sum {
+            float: right;
+        }
+
+        ul>.num {
+            width: 56px;
+        }
+
+        /* 价格 */
+        .price {
+            display: inline-block;
+            margin-left: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>购物车</h1>
+    <div><label><input type="checkbox" id="all_cancel"><span id="text">全选</span></label></div>
+    <form id="list">
+        <!-- 商品列表 -->
+        <div class="box">
+            <label><input type="checkbox" name="shopper" id="">手机</label>
+            <div class="price">单价：<span class="price_num">10</span></div>
+            <ul>
+                <li class="btn sub">-</li>
+                <li class="num">1</li>
+                <li class="btn sum">+</li>
+            </ul>
+            <div class="price">总价：<span class="price_all_num"></span></div>
+        </div>
+        <div class="box">
+            <label><input type="checkbox" name="shopper" id="">电脑</label>
+            <div class="price">单价：<span class="price_num">50</span></div>
+            <ul>
+                <li class="btn sub">-</li>
+                <li class="num">1</li>
+                <li class="btn sum">+</li>
+            </ul>
+            <div class="price">总价：<span class="price_all_num"></span></div>
+        </div>
+        <div class="box">
+            <label><input type="checkbox" name="shopper" id="">电视</label>
+            <div class="price">单价：<span class="price_num">100</span></div>
+            <ul>
+                <li class="btn sub">-</li>
+                <li class="num">1</li>
+                <li class="btn sum">+</li>
+            </ul>
+            <div class="price">总价：<span class="price_all_num"></span></div>
+        </div>
+        <div class="box">
+            <label><input type="checkbox" name="shopper" id="">冰箱</label>
+            <div class="price">单价：<span class="price_num">25</span></div>
+            <ul>
+                <li class="btn sub">-</li>
+                <li class="num">1</li>
+                <li class="btn sum">+</li>
+            </ul>
+            <div class="price">总价：<span class="price_all_num"></span></div>
+        </div>
+        <div class="box">
+            <label><input type="checkbox" name="shopper" id="">空调</label>
+            <div class="price">单价：<span class="price_num">35</span></div>
+            <ul>
+                <li class="btn sub">-</li>
+                <li class="num">1</li>
+                <li class="btn sum">+</li>
+            </ul>
+            <div class="price">总价：<span class="price_all_num"></span></div>
+        </div>
+        <!-- <input type="checkbox">全选 -->
+    </form>
+    <div style="font-weight: 900;font-size: 30px;">
+        合计：<span id="heji" style="color: red;">0.00</span>
+        <span>元</span>
+    </div>
+
+
+</body>
+<script>
+    // 获取元素
+    var oAllCancel = document.getElementById("all_cancel");
+    var aShopper = document.getElementsByName("shopper");
+    var oText = document.getElementById("text");
+    oAllCancel.onchange = function () {
+        // console.log(1)
+        for (var i = 0; i < aShopper.length; i++) {
+            // 判断
+            if (oAllCancel.checked == true) {
+                aShopper[i].checked = true;
+                oText.innerText = "取消全选";
+                all();
+            } else {
+                aShopper[i].checked = false;
+                oText.innerText = "全选";
+                oHeji.innerText="0"
+            }
+        }
+    }
+
+
+    // 商品的加减
+    var aSub = document.getElementsByClassName("sub");
+    var aSum = document.getElementsByClassName("sum");
+    var aNum = document.getElementsByClassName("num");
+    // 商品价格计算
+    var aPrice = document.getElementsByClassName("price_num");
+    var allPrice = document.getElementsByClassName("price_all_num");
+    // 合计总值
+    var oHeji = document.getElementById("heji");
+    // 表单
+    var oList=document.getElementById("list");
+    
+    // aSum[0].onclick = function () {
+    //     aNum[0].innerText = Number(aNum[0].innerText) + 1
+    // }
+    // aSub[0].onclick = function () {
+    //     if (Number(aNum[0].innerText) < 2) {
+
+    //     } else {
+    //         aNum[0].innerText = Number(aNum[0].innerText) - 1
+    //     }
+    // }
+
+    (function priceAll() {
+        for (var i = 0; i < allPrice.length; i++) {
+            allPrice[i].innerText = aNum[i].innerText * aPrice[i].innerText;
+        }
+    })()
+    // priceAll();
+
+    // 商品选择
+    oList.onchange=function(){
+        all01()
+    }
+
+    // 加法
+    for (var i = 0; i < aSum.length; i++) {
+        aSum[i].index = i;
+        aSum[i].onclick = function () {
+            aNum[this.index].innerText = Number(aNum[this.index].innerText) + 1;
+            allPrice[this.index].innerText = aNum[this.index].innerText * aPrice[this.index].innerText;
+            aShopper[this.index].checked = true;
+            all01();
+        }
+        aSub[i].index = i;
+        aSub[i].onclick = function () {
+            if (Number(aNum[this.index].innerText) < 2) {
+
+            } else {
+                aNum[this.index].innerText = Number(aNum[this.index].innerText) - 1;
+                allPrice[this.index].innerText = aNum[this.index].innerText * aPrice[this.index].innerText;
+                aShopper[this.index].checked = true;
+                all01();
+            }
+        }
+    }
+
+    // 总价格
+    function all() {
+        var num = 0;
+        for (var j = 0; j < allPrice.length; j++) {
+            num = num + Number(allPrice[j].innerText)
+        }
+        oHeji.innerText = num;
+        // console.log(num);
+    }
+
+    function all01() {
+        var num2 = 0;
+        var arr = [];
+        for (var j = 0; j < aShopper.length; j++) {
+            if (aShopper[j].checked == true) {
+                arr.push(j);
+                // console.log(arr)
+            }
+        }
+        for (var k = 0; k < arr.length; k++) {
+            num2 = num2 + Number(allPrice[arr[k]].innerText);
+            // console.log(allPrice[arr[k]].innerText);
+        }
+        // console.log(num2)
+        oHeji.innerText = num2;
+    }
+</script>
+
+</html>

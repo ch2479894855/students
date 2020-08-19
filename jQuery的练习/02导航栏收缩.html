@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02导航栏收缩</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav_wrap {
+            width: 200px;
+            margin: 50px auto;
+            border: solid 1px #e5e3da;
+        }
+
+        .nav {
+            width: 190px;
+            height: 30px;
+            border-bottom: solid 1px #e5e3da;
+            line-height: 30px;
+            padding-left: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            color: #999;
+            background: url("image/jiantou1.jpg") no-repeat 180px center;
+        }
+        .nav_wrap>.nav.show{
+            color:#277fc2;
+            background: url("image/jiantou.jpg") no-repeat 177px center;
+        }
+        .nav:hover {
+            color: #277fc2;
+        }
+        .nav_list{
+            text-align: center;
+            line-height: 30px;
+            border-bottom: solid 1px #e5e3da;
+            display: none;
+            cursor: pointer;
+        }
+        .nav_list li:hover{
+            background: rgb(39,127,194);
+            color:white;
+        }
+    </style>
+    <script src="../jquery-1.11.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="nav_wrap">
+        <div class="nav">新闻中心</div>
+        <ul class="nav_list">
+            <li>添加新闻</li>
+            <li>新闻管理</li>
+            <li>添加新闻</li>
+            <li>新闻管理</li>
+        </ul>
+        <div class="nav">关于我们</div>
+        <ul class="nav_list">
+            <li>添加新闻</li>
+            <li>新闻管理</li>
+            <li>添加新闻</li>
+            <li>新闻管理</li>
+        </ul>
+        <div class="nav">业务系统</div>
+        <ul class="nav_list">
+            <li>添加新闻</li>
+            <li>新闻管理</li>
+            <li>添加新闻</li>
+            <li>新闻管理</li>
+        </ul>
+        <div class="nav">招商加盟</div>
+        <ul class="nav_list">
+            <li>添加新闻</li>
+            <li>新闻管理</li>
+            <li>添加新闻</li>
+            <li>新闻管理</li>
+        </ul>
+    </div>
+</body>
+<script>
+    $(function () {
+        $(".nav").click(function(){
+            $(this).next().stop().slideToggle().siblings(".nav_list").slideUp();
+            $(this).toggleClass("show").siblings(".nav").removeClass("show");
+        })
+    })
+</script>
+
+</html>

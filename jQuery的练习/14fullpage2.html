@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13fullpage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .box {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wrap {
+            position: absolute;
+            top: 0;
+        }
+
+        .page {
+            /* width: 100vw;
+            height: 100vh; */
+            color: white;
+            text-align: center;
+            /* line-height: 100vh; */
+            font-size: 200px;
+        }
+
+        /* 切换的点 */
+        .point_list{
+            width: 50px;
+            height: 300px;
+            position: absolute;
+            right: 80px;
+            top: 50%;
+            margin-top: -150px;
+        }
+        .point_list .point{
+            width: 40px;
+            height: 40px;
+            background: hotpink;
+            margin: 16px 5px;
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            font-size: 25px;
+            cursor: pointer;
+        }
+        .point_list .point.yellow{
+            background: yellow;
+        }
+    </style>
+    <script src="../jquery-1.11.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="box">
+        <div class="wrap">
+            <div class="page" style="background: red;">1</div>
+            <div class="page" style="background: yellow;">2</div>
+            <div class="page" style="background: blue;">3</div>
+            <div class="page" style="background: green;">4</div>
+            <div class="page" style="background: orange;">5</div>
+        </div>
+        <ul class="point_list">
+            <li class="point yellow">1</li>
+            <li class="point">2</li>
+            <li class="point">3</li>
+            <li class="point">4</li>
+            <li class="point">5</li>
+        </ul>
+    </div>
+</body>
+<script>
+    // 利用js设置宽高
+    $(window).resize(set);
+    $(window).load(set);
+    // 初始化一个值
+    var index = 0;
+    // 火狐浏览器
+    window.addEventListener("DOMMouseScroll", function (e) {
+        scroll1(e)
+    })
+    // 非火狐浏览器
+    window.onmousewheel=function (e) {
+        scroll1(e);
+    }
+
+    // 点击点切换
+    $(".point").click(function(){
+        $(this).addClass("yellow").siblings().removeClass("yellow");
+        index=$(this).index();
+        animate1(index);
+    })
+
+
+    // 滚动动画
+    function animate1(index) {
+        $(".point").eq(index).addClass("yellow").siblings().removeClass("yellow");
+        $(".wrap").animate({"top":-(window.innerHeight) *index + "px"})
+    }
+    // 判断
+    function scroll1(e){
+        if ($(".wrap").offset().top == -(window.innerHeight) * index) {
+            if (e.detail > 0||e.wheelDelta < 0) {
+                // 向下滚动
+                index > 3 ? index = 4 : index++;
+                animate1(index);
+            }
+            if (e.detail < 0||e.wheelDelta > 0) {
+                // 向上滚动
+                index < 1 ? index = 0 : index--;
+                animate1(index);
+            }
+        } else {
+
+        }
+    }
+     // 重置页面宽高
+     function set(){
+        $(".page").height(window.innerHeight);
+        $(".page").width(window.innerWidth);
+    }
+</script>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>悬停显示放大</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            width: 300px;
+            height: 200px;
+            float: left;
+            margin-left: 20px;
+        }
+
+        li:nth-of-type(1) {
+            background: url("image/0.jpg") no-repeat center/100% 100%;
+        }
+
+        li:nth-of-type(2) {
+            background: url("image/1.jpg") no-repeat center/100% 100%;
+        }
+
+        li:nth-of-type(3) {
+            background: url("image/2.jpg") no-repeat center/100% 100%;
+        }
+
+        li:nth-of-type(4) {
+            background: url("image/3.jpg") no-repeat center/100% 100%;
+        }
+    </style>
+    <script src="../jquery-1.11.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <ul class="pic_list">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+<script>
+    $(function () {
+        $("li").mouseover(function (ev) {
+            var index=$(this).index();
+            var oBox=$("<div id='box'></div>");
+            oBox.css({"width":"500px","height":"300px","background":"url(image/"+index+".jpg) no-repeat center/100% 100%","position":"absolute","top":ev.pageY+10+"px","left":ev.pageX+10+"px"});
+            $("body").append(oBox);
+            $("#box").fadeIn(100);  
+        }).mouseout(function(){
+            $("#box").remove();
+        }).mousemove(function(ev){
+            console.log(ev.pageX,ev.pageY)
+            $("#box").css({"left":ev.pageX+10+"px","top":ev.pageY+10+"px"});
+        })
+    })
+</script>
+
+</html>

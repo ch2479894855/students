@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04百叶窗</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .wrap {
+            width: 600px;
+            height: 300px;
+            background: pink;
+            margin: 100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pic {
+            width: 498px;
+            height: 298px;
+            border: 1px solid white;
+            position: absolute;
+            top: 0;
+        }
+
+        .pic:nth-of-type(1) {
+            background: url("image/0.jpg") no-repeat center/100% 100%;
+            /* left: 0; */
+        }
+
+        .pic:nth-of-type(2) {
+            background: url("image/1.jpg") no-repeat center/100% 100%;
+            /* left: 120px; */
+        }
+
+        .pic:nth-of-type(3) {
+            background: url("image/2.jpg") no-repeat center/100% 100%;
+            /* left: 240px; */
+        }
+
+        .pic:nth-of-type(4) {
+            background: url("image/3.jpg") no-repeat center/100% 100%;
+            /* left: 360px; */
+        }
+
+        .pic:nth-of-type(5) {
+            background: url("image/4.jpg") no-repeat center/100% 100%;
+            /* left: 480px; */
+        }
+    </style>
+    <script src="../jquery-1.11.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- <img src="image/0.jpg" alt="">
+        <img src="image/1.jpg" alt="">
+        <img src="image/2.jpg" alt="">
+        <img src="image/3.jpg" alt="">
+        <img src="image/4.jpg" alt=""> -->
+        <div class="pic"></div>
+        <div class="pic"></div>
+        <div class="pic"></div>
+        <div class="pic"></div>
+        <div class="pic"></div>
+    </div>
+</body>
+<script>
+    // 利用for循环给盒子定位   css()
+    for (var i = 0; i < $(".pic").length; i++) {
+        $(".pic").eq(i).css("left", 120 * i + "px");
+    }
+    function back() {
+        for (var i = 0; i < $(".pic").length; i++) {
+            $(".pic").eq(i).stop().animate({
+                "left": 120 * i + "px"
+            });
+        }
+    }
+
+    $(".pic").hover(function () {
+        var n=$(this).index();
+        $(this).css("index",999);
+        for(var i=0;i<=n;i++){
+            $(".pic").eq(i).stop().animate({"left":25*i+"px"})
+        }
+        for(var j=n+1;j<$(".pic").length;j++){
+            $(".pic").eq(j).stop().animate({"left":25*(j-1)+500+"px"})
+        }
+    }, function () {
+        back()
+    })
+</script>
+
+</html>

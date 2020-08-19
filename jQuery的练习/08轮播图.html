@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08轮播图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .wrap {
+            width: 600px;
+            height: 400px;
+            background: pink;
+            margin: 100px auto;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .pic_list li {
+            width: 600px;
+            height: 400px;
+            display: none;
+            color: white;
+            font-size: 100px;
+            text-align: center;
+            line-height: 400px;
+        }
+
+        .pic_list li:nth-of-type(1) {
+            background: url("image/pic/pic1.jpg") no-repeat center/100% 100%;
+        }
+
+        .pic_list li:nth-of-type(2) {
+            background: url("image/pic/pic2.jpg") no-repeat center/100% 100%;
+        }
+
+        .pic_list li:nth-of-type(3) {
+            background: url("image/pic/pic3.jpg") no-repeat center/100% 100%;
+        }
+
+        .pic_list li:nth-of-type(4) {
+            background: url("image/pic/pic4.jpg") no-repeat center/100% 100%;
+        }
+
+        /* 左右按钮 */
+        .btn {
+            width: 30px;
+            height: 60px;
+            background: red;
+            position: absolute;
+            color: white;
+            font-size: 30px;
+            text-align: center;
+            line-height: 60px;
+        }
+
+        .btn_l {
+            left: 0;
+            top: 50%;
+            margin-top: -30px;
+        }
+
+        .btn_r {
+            right: 0;
+            top: 50%;
+            margin-top: -30px;
+        }
+
+        /* 下面四个点 */
+        .points_list {
+            width: 200px;
+            height: 40px;
+            position: absolute;
+            left: 50%;
+            margin-left: -100px;
+            bottom: 30px;
+            background: skyblue;
+            border-radius: 20px;
+        }
+
+        .points_list li {
+            float: left;
+            width: 30px;
+            height: 30px;
+            background: green;
+            border-radius: 50%;
+            margin: 5px 10px;
+        }
+
+        .points_list li:hover {
+            background: red;
+        }
+
+        .points_list li.red {
+            background: red;
+        }
+    </style>
+    <script src="../jquery-1.11.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <ul class="pic_list">
+            <li style="display:block">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+        <ul class="points_list">
+            <li class="red"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="btn btn_l">&lt;</div>
+        <div class="btn btn_r">&gt;</div>
+    </div>
+</body>
+<script>
+    $(function () {
+        var index = 0;
+
+        // 四个按钮切换
+        $(".points_list li").click(function () {
+            index = $(this).index();
+            qiehuan(index);
+        })
+
+        // 右按钮
+        $(".btn_r").click(function () {
+            index == 3 ? index = 0 : index++;
+            qiehuan(index);
+        })
+        // 左按钮
+        $(".btn_l").click(function () {
+            index == 0 ? index = 3 : index--;
+            qiehuan(index);
+        })
+
+        function qiehuan(index) {
+            $(".points_list li").eq(index).addClass("red").siblings().removeClass();
+            $(".pic_list li").eq(index).fadeIn().siblings().fadeOut(0);
+        }
+
+        // 自动切换
+        var timer = setInterval(function () {
+            index == 3 ? index = 0 : index++;
+            qiehuan(index);
+        }, 2000)
+
+        $(".wrap").hover(function () {
+            clearInterval(timer);
+        }, function () {
+            timer = setInterval(function () {
+                index == 3 ? index = 0 : index++;
+                qiehuan(index);
+            }, 2000)
+        })
+    })
+</script>
+
+</html>

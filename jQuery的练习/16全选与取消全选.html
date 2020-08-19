@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16全选与取消全选</title>
+</head>
+
+<body>
+    <h1>全选与取消全选</h1>
+    <form>
+        <label><input type="checkbox" name="shopper" id="">手机</label><br>
+        <label><input type="checkbox" name="shopper" id="">电脑</label><br>
+        <label><input type="checkbox" name="shopper" id="">电视</label><br>
+        <label><input type="checkbox" name="shopper" id="">冰箱</label><br>
+        <label><input type="checkbox" name="shopper" id="">空调</label><br>
+        <!-- <input type="checkbox">全选 -->
+    </form>
+    <label><input type="checkbox" id="all_cancel"><span id="text">全选</span></label>
+    <!-- <button id="all">全选</button>
+    <button id="cancel">取消全选</button> -->
+</body>
+<script>
+    // 获取元素
+    var oAll = document.getElementById("all");
+    var oCancel = document.getElementById("cancel");
+    var aShopper = document.getElementsByName("shopper");
+
+    // checked=fasle   不选中   checked=true   选中
+
+    // // 全选
+    // oAll.onclick=function(){
+    //     for(var i=0;i<aShopper.length;i++){
+    //         // aShopper[i].setAttribute("checked",true);
+    //         aShopper[i].checked=true;
+    //     }
+    // }
+    // // 取消全选
+    // oCancel.onclick=function(){
+    //     for(var i=0;i<aShopper.length;i++){
+    //         // aShopper[i].setAttribute("checked",fasle);
+    //         aShopper[i].checked=false;
+    //     }
+    // }
+
+    // 获取全选框
+    var oAllCancel = document.getElementById("all_cancel");
+    var oText=document.getElementById("text");
+    oAllCancel.onchange = function () {
+        // console.log(1)
+        for (var i = 0; i < aShopper.length; i++) {
+            // 判断
+            if (oAllCancel.checked == true) {
+                aShopper[i].checked = true;
+                oText.innerText="取消全选";
+            } else {
+                aShopper[i].checked = false;
+                oText.innerText="全选";
+            }
+        }
+    }
+</script>
+
+</html>

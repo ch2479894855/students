@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11原生js放大镜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .wrap {
+            width: 400px;
+            height: 500px;
+            background: pink;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        /* 产品图 */
+        .pic_list li {
+            width: 398px;
+            height: 398px;
+            border: 1px solid black;
+            display: none;
+        }
+
+        .pic_list li:nth-of-type(1) {
+            background: url("image/pic/pic1.jpg") no-repeat center/100% 100%;
+        }
+
+        .pic_list li:nth-of-type(2) {
+            background: url("image/pic/pic2.jpg") no-repeat center/100% 100%;
+        }
+
+        .pic_list li:nth-of-type(3) {
+            background: url("image/pic/pic3.jpg") no-repeat center/100% 100%;
+        }
+
+        .pic_list li:nth-of-type(4) {
+            background: url("image/pic/pic4.jpg") no-repeat center/100% 100%;
+        }
+
+        .pic_list li.show {
+            display: block;
+        }
+
+        /* 蒙版 */
+        .pic_list .shadow {
+            width: 100px;
+            height: 100px;
+            background: rgba(200, 200, 200, 0.5);
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            cursor: move;
+        }
+
+
+        /* 小缩览图 */
+        .min_pic li {
+            width: 78px;
+            height: 78px;
+            float: left;
+            margin: 10px;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+
+        .min_pic li:hover {
+            border: 1px solid yellow;
+            /* animation: fangda .5s linear; */
+        }
+
+        .min_pic li.red {
+            border: 1px solid yellow;
+        }
+
+        @keyframes fangda {
+            from {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.5);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .min_pic li:nth-of-type(1) {
+            background: url("image/pic/pic1.jpg") no-repeat center/100% 100%;
+        }
+
+        .min_pic li:nth-of-type(2) {
+            background: url("image/pic/pic2.jpg") no-repeat center/100% 100%;
+        }
+
+        .min_pic li:nth-of-type(3) {
+            background: url("image/pic/pic3.jpg") no-repeat center/100% 100%;
+        }
+
+        .min_pic li:nth-of-type(4) {
+            background: url("image/pic/pic4.jpg") no-repeat center/100% 100%;
+        }
+
+        /* 放大的图 */
+        .pic_big {
+            width: 400px;
+            height: 400px;
+            border: 1px solid black;
+            position: absolute;
+            top: 0;
+            left: 400px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .pic_big li {
+            width: 1600px;
+            height: 1600px;
+            display: none;
+            position: absolute;
+        }
+
+        .pic_big li.show {
+            display: block;
+        }
+
+        .pic_big li:nth-of-type(1) {
+            background: url("image/pic/pic1.jpg") no-repeat 0 0/100% 100%;
+        }
+
+        .pic_big li:nth-of-type(2) {
+            background: url("image/pic/pic2.jpg") no-repeat 0 0/100% 100%;
+        }
+
+        .pic_big li:nth-of-type(3) {
+            background: url("image/pic/pic3.jpg") no-repeat 0 0/100% 100%;
+        }
+
+        .pic_big li:nth-of-type(4) {
+            background: url("image/pic/pic4.jpg") no-repeat 0 0/100% 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- 上边的大图 -->
+        <ul class="pic_list">
+            <li class="pic_list_item show"></li>
+            <li class="pic_list_item"></li>
+            <li class="pic_list_item"></li>
+            <li class="pic_list_item"></li>
+            <div class="shadow"></div>
+        </ul>
+        <!-- 下边的缩略图 -->
+        <ul class="min_pic">
+            <li class="min_pic_item red"></li>
+            <li class="min_pic_item"></li>
+            <li class="min_pic_item"></li>
+            <li class="min_pic_item"></li>
+        </ul>
+        <!-- 放大的图 -->
+        <ul class="pic_big">
+            <li class="pic_big_item show"></li>
+            <li class="pic_big_item"></li>
+            <li class="pic_big_item"></li>
+            <li class="pic_big_item"></li>
+        </ul>
+    </div>
+
+</body>
+<script>
+    // 获取元素
+    var aSmall = document.getElementsByClassName("min_pic_item"); // 缩览图
+    var aBig = document.getElementsByClassName("pic_big_item"); // 放大的图
+    var aPic = document.getElementsByClassName("pic_list_item"); // 正常图 
+    var oPicList = document.getElementsByClassName("pic_list")[0]; // 正常图的盒子
+    var oShadow = document.getElementsByClassName("shadow")[0]; // 获取蒙版
+    var oPicBig = document.getElementsByClassName("pic_big")[0]; // 放大图片盒子
+    var index=0;
+    // tab切换   点击缩览图
+    for (var i = 0; i < aSmall.length; i++) {
+        aSmall[i].index = i;
+        aSmall[i].onclick = function () {
+            index=this.index;
+            // 针对缩览图 正常图 方法的图 的操作
+            for (var j = 0; j < aSmall.length; j++) {
+                aSmall[j].className = "min_pic_item";
+                aPic[j].className = "pic_list_item";
+                aBig[j].className = "pic_big_item";
+            }
+            aSmall[this.index].className = "min_pic_item red";
+            aPic[this.index].className = "pic_list_item show";
+            aBig[this.index].className = "pic_big_item show";
+
+        }
+    }
+
+    // 鼠标移入事件
+    oPicList.onmouseover = function () {
+        oShadow.style.display = "block";
+        oPicBig.style.display = "block";
+    }
+    // 鼠标移出事件
+    oPicList.onmouseout = function () {
+        oShadow.style.display = "none";
+        oPicBig.style.display = "none";
+    }
+
+    // 鼠标移动  蒙版跟随
+    oPicList.onmousemove = function (ev) {
+        var ev = ev || window.ev;
+        // x:鼠标指针相对于产片图盒子 水平方向的偏移
+        var x = ev.pageX - oPicList.offsetParent.offsetLeft;
+        // y:鼠标指针相对于产片图盒子 垂直方向的偏移
+        var y = ev.pageY - oPicList.offsetParent.offsetTop;
+        // 判断水平方向的  移动
+        if (x < 50) {
+            // 当鼠标移动到左边缘时
+            oShadow.style.left="0px";
+        } else if (x > 350) {
+            // 当鼠标移动到右边缘时
+            oShadow.style.left="300px";
+        } else {
+            oShadow.style.left=x - 50 + "px";
+            
+            // 指定是哪一张大图
+            aBig[index].style.left=-(x - 50) * 4 + "px";
+        }
+        // 判断垂直方向的  移动
+        if (y < 50) {
+            // 当鼠标移动到上边缘时
+            oShadow.style.top="0px";
+        } else if (y > 350) {
+            // 当鼠标移动到下边缘时
+            oShadow.style.top="300px";
+        } else {
+            oShadow.style.top=y - 50 + "px";
+            aBig[index].style.top=-(y - 50) * 4 + "px";
+        }
+    }
+</script>
+
+</html>

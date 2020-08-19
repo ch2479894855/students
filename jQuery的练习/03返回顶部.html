@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03返回顶部</title>
+    <style>
+        * {
+            margin: 0;
+        }
+
+        body {
+            height: 3000px;
+            background: url("image/bg.png");
+        }
+
+        .rocket {
+            width: 150px;
+            height: 195px;
+            background: url("image/gotop.png") no-repeat;
+            position: fixed;
+            bottom: 100px;
+            right: 50px;
+            display: none;
+        }
+
+        .rocket:hover {
+            cursor: pointer;
+            background: url("image/gotopd.gif") no-repeat;
+        }
+    </style>
+    <script src="../jquery-1.11.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="rocket"></div>
+</body>
+<script>
+    $(function () {
+        // 窗口滚动事件
+        $(window).scroll(function () {
+            // 判断  scrollTop()
+            if ($(window).scrollTop() > 200) {
+                $(".rocket").fadeIn()
+            } else {
+                $(".rocket").fadeOut(0);
+            }
+        })
+
+        // 点击 返回顶部
+        $(".rocket").click(function () {
+            // $(window).scrollTop(0)
+            $("html,body").animate({
+                scrollTop: "0px"
+            }, 300);
+            $(".rocket").animate({
+                "bottom": "2000px"
+            },function(){
+                $(this).css({"bottom":'100px'})
+            });
+        })
+    })
+</script>
+
+</html>
